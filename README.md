@@ -12,6 +12,10 @@ pip install cvzone
 ```
 pip install mediapipe
 ```
+3. pygame
+```
+pip install pygame
+```
 
 ---
 made by Phumin "HourCode" Udomdach
