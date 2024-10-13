@@ -47,6 +47,7 @@ difficultyLevel = 1
 comboCounter = 0
 slowMotionActive = False
 shieldActive = False
+scoreMultiplierActive = False  # Initialize score multiplier to False
 
 # Movement Variables
 speedX = 0
@@ -119,13 +120,14 @@ def spawn_power_up():
         
         powerUpStartTime = time.time()
 
+
 # Power-Up Effects
 def activate_power_up():
     global totalTime, scoreMultiplierActive, slowMotionActive, shieldActive, powerUpType, powerUpActive, powerUpStartTime
     if powerUpType == 'extra_time':
         totalTime += 5  # Add 5 seconds to game time
     elif powerUpType == 'score_multiplier':
-        scoreMultiplierActive = True
+        scoreMultiplierActive = True  # Activate score multiplier
     elif powerUpType == 'slow_motion':
         slowMotionActive = True
         slow_motion_sound.play()  # Play slow-motion effect sound
@@ -159,6 +161,10 @@ def game_over_screen(img):
 while True:
     success, img = cap.read()
     imgHeight, imgWidth, _ = img.shape
+    
+    # In the main loop, deactivate the score multiplier after 5 seconds
+    if scoreMultiplierActive and time.time() - powerUpStartTime > powerUpDuration:
+        scoreMultiplierActive = False  # Deactivate the score multiplier after 5 seconds
 
     # Handle freeze time power-up effect
     if slowMotionActive and time.time() - powerUpStartTime > powerUpDuration:
